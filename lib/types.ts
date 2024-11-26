@@ -16,6 +16,13 @@ export interface User {
     people_count: number; 
   }
 
+
+  export interface PlayerEventData {
+    timestamp: number;
+    content_url?: string;
+    content_type?: string;
+  }
+
   export type CreateRoomResponse = {
     room_id?: number;
     error?: string;

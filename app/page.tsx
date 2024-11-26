@@ -44,8 +44,8 @@ const handleRegister = async (
 
     const data = await res.json();
     if (res.ok) {
-      localStorage.setItem("user", JSON.stringify(data)); // Salvar o usuário no localStorage
-      window.location.reload(); // Atualizar a página para exibir o estado logado
+      localStorage.setItem("user", JSON.stringify(data)); 
+      window.location.reload(); 
     } else {
       alert(data.error || "Erro ao registrar");
     }
@@ -56,12 +56,11 @@ const handleRegister = async (
 };
 
 export default function Home() {
-  const [user, setUser] = useState<any>(null); // Estado para armazenar o usuário logado
+  const [user, setUser] = useState<any>(null); 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const router = useRouter(); // Redirecionamento de página
+  const router = useRouter(); 
 
-  // Verificar usuário logado ao carregar a página
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -69,7 +68,6 @@ export default function Home() {
     }
   }, []);
 
-  // Função de logout
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
@@ -91,7 +89,6 @@ export default function Home() {
           </motion.div>
           <div className="flex items-center space-x-4">
             {user ? (
-              // Avatar com Menu do Usuário Logado
               <div className="relative group">
                 <div className="flex items-center space-x-2 cursor-pointer">
                   <User className="h-6 w-6 text-primary" />
@@ -107,7 +104,6 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              // Botões de Login e Registro
               <>
                 <Button variant="ghost" onClick={() => setShowLoginModal(true)}>
                   Login
@@ -194,7 +190,6 @@ export default function Home() {
           </div>
         </motion.div>
       </main>
-     {/* Modal de Login */}
      {showLoginModal && (
         <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
           <div className="bg-card p-6 rounded-lg shadow-lg">
@@ -231,8 +226,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      {/* Modal de Registro */}
       {showRegisterModal && (
         <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
           <div className="bg-card p-6 rounded-lg shadow-lg">

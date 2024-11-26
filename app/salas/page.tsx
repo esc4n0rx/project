@@ -65,7 +65,7 @@ export default function Salas() {
   
       const userId = await getUserIdByNickname(user.nickname);
       if (!userId) {
-        return; // Não continue se não encontrar o ID
+        return; 
       }
   
       if (!roomName.trim()) {
@@ -80,7 +80,7 @@ export default function Salas() {
           name: roomName,
           is_private: isPrivate,
           password: isPrivate ? password : null,
-          created_by: userId, // Enviar o ID do usuário buscado
+          created_by: userId, 
         }),
       });
   
@@ -98,7 +98,7 @@ export default function Salas() {
 
   const handleJoinRoom = async () => {
     try {
-      if (roomCode.trim() === "") {
+      if (!roomCode.trim()) {
         alert("Digite um código de sala válido!");
         return;
       }
@@ -113,8 +113,10 @@ export default function Salas() {
   
       const userId = await getUserIdByNickname(user.nickname);
       if (!userId) {
-        return; // Não continue se não encontrar o ID
+        return; 
       }
+  
+      console.log("Tentando entrar na sala:", { room_id: roomCode, user_id: userId });
   
       const res = await fetch("http://localhost:4000/api/auth/join", {
         method: "POST",
@@ -125,10 +127,12 @@ export default function Salas() {
         }),
       });
   
-      const data: CreateRoomResponse = await res.json();
-      if (res.ok && data.room_id) {
+      const data = await res.json();
+      if (res.ok) {
+        console.log("Entrada bem-sucedida na sala:", data);
         router.push(`/salas/${roomCode}`);
       } else {
+        console.error("Erro ao entrar na sala:", data);
         alert(data.error || "Erro ao entrar na sala");
       }
     } catch (err) {
@@ -136,7 +140,6 @@ export default function Salas() {
     }
   };
   
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted to-background">
       <nav className="fixed w-full z-50 border-b bg-background/80 backdrop-blur-sm">
